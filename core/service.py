@@ -1,10 +1,14 @@
 import logging
 import struct
+from core.models import CooperativeMember
 from django.conf import settings
 from urllib.request import Request, urlopen
 from xml.etree import ElementTree as et
 
 logger = logging.getLogger('vote.service')
+
+def is_coop_member(student_id):
+    return CooperativeMember.objects.filter(student_id=student_id).exists()
 
 def reverse_indian(i):
     return struct.unpack('<I', struct.pack('>I', i))

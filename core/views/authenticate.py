@@ -109,6 +109,10 @@ def authenticate(request):
     if kind is None:
         return error('unqualified')
 
+    # Check if cooperative member
+    is_coop = service.is_coop_member(student_id)
+    kind = kind + ('1' if is_coop else '0')
+
     # Generate record and token
     record.state = Record.LOCKED
     record.save()

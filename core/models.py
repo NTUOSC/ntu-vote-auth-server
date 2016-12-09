@@ -5,6 +5,9 @@ from django.conf import settings
 from django.db import models
 from django.utils import timezone
 
+class CooperativeMember(models.Model):
+    student_id = models.CharField(max_length=10, unique=True)
+    serial = models.CharField(max_length=16, unique=True)
 
 class Record(models.Model):
 

@@ -96,6 +96,11 @@ def authenticate(request):
         entry = Entry.objects.get(dpt_code=aca_info.department)
         kind = entry.kind
         logger.debug('DPT_CODE %s', type(aca_info.department))
+
+        # Check if cooperative member
+        is_coop = service.is_coop_member(student_id)
+        kind = kind + ('1' if is_coop else '0')
+
     except Entry.DoesNotExist:
         logger.error('Entry not found: %s', aca_info.department)
         return error('entry_not_found')
@@ -108,10 +113,6 @@ def authenticate(request):
 
     if kind is None:
         return error('unqualified')
-
-    # Check if cooperative member
-    is_coop = service.is_coop_member(student_id)
-    kind = kind + ('1' if is_coop else '0')
 
     # Generate record and token
     record.state = Record.LOCKED

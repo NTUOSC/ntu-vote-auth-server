@@ -99,7 +99,7 @@ def authenticate(request):
 
         # Check if cooperative member
         is_coop = service.is_coop_member(student_id)
-        kind = kind + ('1' if is_coop else 'C')
+        kind = kind + ('C' if is_coop else '0')
 
     except Entry.DoesNotExist:
         logger.error('Entry not found: %s', aca_info.department)
